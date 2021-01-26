@@ -8,14 +8,12 @@ namespace Problem2
     {
         static void Main(string[] args)
         {
-            string employeeType = Employee.GetEmployeeType();
-            int numOfMeals = Employee.GetMealData();
-            Employee.CalculateCafeteriaDues(numOfMeals, employeeType);
+            string type = GetEmployeeType();
+            int mealAmount = GetMealAmount();
+            Employee e1 = new Employee(type, mealAmount);
+            CalculateCafeteriaDues(e1);
         }
-    }
 
-    static class Employee 
-    {
         public static string GetEmployeeType()
         {
             string type = "";
@@ -40,7 +38,7 @@ namespace Problem2
             }
         }
 
-        public static int GetMealData()
+        public static int GetMealAmount()
         {
             string numOfMeals = "";
             int parsedNumOfMeals;
@@ -53,20 +51,34 @@ namespace Problem2
             return parsedNumOfMeals;
         }
 
-        public static void CalculateCafeteriaDues(int numOfMeals, string employeeType)
+        public static void CalculateCafeteriaDues(Employee employee)
         {
-           switch (employeeType)
+            switch (employee.type)
             {
                 case "temp":
-                    WriteLine($"You owe ${2.75 * numOfMeals}");
+                    WriteLine($"You owe ${2.75 * employee.mealsPurchased}");
                     break;
                 case "fullTime":
                     WriteLine("You get free meals, keep up the good work!");
                     break;
                 case "partTime":
-                    WriteLine($"You owe ${1.5 * numOfMeals}");
+                    WriteLine($"You owe ${1.5 * employee.mealsPurchased}");
                     break;
             }
         }
     }
+
+    class Employee
+    {
+        public string type { get; set; }
+        public int mealsPurchased { get; set; }
+
+        public Employee(string type, int mealsPurchased)
+        {
+            this.type = type;
+            this.mealsPurchased = mealsPurchased;
+        }     
+        
+    }
+
 }
